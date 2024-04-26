@@ -1,0 +1,2 @@
+C:\Users\josep\OneDrive\Documentos\Estructura de datos\Listas enlazadas\W3resourceProblems\Excercises\Parcial\Parcial\x64\Debug\Parcial.vcxproj.AssemblyReference.cache
+C:\Users\josep\OneDrive\Documentos\Estructura de datos\Listas enlazadas\W3resourceProblems\Excercises\Parcial\Parcial\x64\Debug\Parcial.vcxproj.SuggestedBindingRedirects.cache
