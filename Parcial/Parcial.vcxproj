@@ -128,9 +128,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cliente.h" />
+    <ClInclude Include="CloudServer.h" />
     <ClInclude Include="Dependencies.h" />
     <ClInclude Include="Empleado.h" />
-    <ClInclude Include="Evento.h" />
+    <ClInclude Include="Mantenimiento.h" />
+    <ClInclude Include="Resena.h" />
+    <ClInclude Include="ServerStatus.h" />
+    <ClInclude Include="TipoAlojamiento.h" />
     <ClInclude Include="Factura.h" />
     <ClInclude Include="Habitacion.h" />
     <ClInclude Include="Invetario.h" />

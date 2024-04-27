@@ -13,7 +13,11 @@ public:
     Empleado(int id, string nombreUsuario, string contraseña, string departamento)
         : Usuario(id, nombreUsuario, contraseña), departamento(departamento) {}
 
-    void mostrarInformacion() const override;
+    string toString() const override {
+        ostringstream ss;
+        ss << Usuario::toString() << ", Departamento: " << departamento;
+        return ss.str();
+    }
 };
 
 #endif

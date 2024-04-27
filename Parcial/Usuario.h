@@ -14,7 +14,12 @@ public:
     Usuario(int id, string nombreUsuario, string contraseña)
         : id(id), nombreUsuario(nombreUsuario), contraseña(contraseña) {}
 
-    virtual void mostrarInformacion() const;
+    virtual string toString() const {
+        ostringstream ss;
+        ss << "Usuario(ID: " << id << ", Usuario: " << nombreUsuario << ")";
+        return ss.str();
+    }
+
     virtual ~Usuario() {}
 };
 
