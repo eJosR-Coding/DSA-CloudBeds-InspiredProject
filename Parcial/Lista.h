@@ -3,8 +3,7 @@
 #define LISTA_H
 
 #include "Nodo.h"
-#include <iostream>
-#include <string>
+#include "Dependencies.h"
 
 template<class T>
 class Lista {
