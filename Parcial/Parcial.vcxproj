@@ -129,8 +129,20 @@
   <ItemGroup>
     <ClInclude Include="Cliente.h" />
     <ClInclude Include="Dependencies.h" />
+    <ClInclude Include="Empleado.h" />
+    <ClInclude Include="Evento.h" />
+    <ClInclude Include="Factura.h" />
+    <ClInclude Include="Habitacion.h" />
+    <ClInclude Include="Invetario.h" />
+    <ClInclude Include="Lista.h" />
+    <ClInclude Include="Nodo.h" />
+    <ClInclude Include="Pago.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="Promocion.h" />
+    <ClInclude Include="Proveedor.h" />
+    <ClInclude Include="Reservacion.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Servicio.h" />
     <ClInclude Include="Usuario.h" />
   </ItemGroup>
   <ItemGroup>
