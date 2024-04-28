@@ -9,6 +9,7 @@ protected:
     int id;
     string nombreUsuario;
     string contraseña;
+    int edad;
 
 public:
     Usuario(int id, string nombreUsuario, string contraseña)

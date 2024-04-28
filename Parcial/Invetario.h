@@ -1,21 +1,50 @@
 #pragma once
-#ifndef INVENTARIO_H
-#define INVENTARIO_H
+
+#ifndef ARTICULO_H
+#define ARTICULO_H
+
+#include <string>
 
 #include "Dependencies.h"
-
-class Inventario {
+#include <vector>
+class Articulo {
 private:
-    int id;
-    string item;
+    string nombre;
+    double precio;
     int cantidad;
 
 public:
-    Inventario(int id, string item, int cantidad)
-        : id(id), item(item), cantidad(cantidad) {}
+    Articulo(string nombre, double precio, int cantidad)
+        : nombre(nombre), precio(precio), cantidad(cantidad) {}
 
-    void actualizarCantidad(int cambio);
-    void mostrarInventario() const;
+    string getNombre() const { return nombre; }
+    void setNombre(string nombre) { this->nombre = nombre; }
+
+    double getPrecio() const { return precio; }
+    void setPrecio(double precio) { this->precio = precio; }
+
+    int getCantidad() const { return cantidad; }
+    void setCantidad(int cantidad) { this->cantidad = cantidad; }
+};
+
+
+#endif
+#ifndef INVENTARIO_H
+#define INVENTARIO_H
+
+
+class Inventario {
+private:
+    std::vector<Articulo> articulos;
+
+public:
+    void agregarArticulo(const Articulo& articulo) {
+        articulos.push_back(articulo);
+    }
+
+    std::vector<Articulo> getArticulos() const {
+        return articulos;
+    }
 };
 
 #endif
