@@ -3,20 +3,21 @@
 #include "Cliente.h"
 #include "Invetario.h"
 #include "Empleado.h"
-
 using namespace System;
 using namespace std;
 
 void mostrarMenu() {
-    cout << "\n=== Menú Cloudbeds ===\n";
+    cout << "\n========================================\n";
+    cout << "===          Menu Cloudbeds          ===\n";
+    cout << "========================================\n\n";
     cout << "1. Registrar Cliente\n";
-    cout << "2. Registrar Empleado\n";
-    cout << "3. Mostrar Usuarios\n";
-    cout << "4. Salir\n";
-    cout << "Seleccione una opción: ";
+    cout << "2. Mostrar Usuarios\n";
+    cout << "3. Salir\n";
+    cout << "========================================\n";
+    cout << "Seleccione una opcion: ";
 }
 void generarFactura(const Cliente& cliente, const Inventario& inventario) {
-    cout << "\n**Factura**\n";
+    cout << "\n*Factura*\n";
     cout << "Cliente: " << cliente.getNombreCompleto() << endl;
     cout << "Habitación: " << cliente.getHabitacion() << endl;
     cout << "Tipo Alojamiento: " << cliente.getTipoAlojamiento() << endl;
@@ -24,11 +25,20 @@ void generarFactura(const Cliente& cliente, const Inventario& inventario) {
     cout << "Promoción: " << cliente.getPromocion() << endl;
 
     double total = 0;
-    for (const Articulo& articulo : inventario.getArticulos()) {
-        if (articulo.getNombre() == cliente.getHabitacion()) {
-            total += articulo.getPrecio();
-            break;
-        }
+
+    // Calculate accommodation cost based on type
+    if (cliente.getTipoAlojamiento() == "Departamento") {
+        total = 25.0;
+    }
+    else if (cliente.getTipoAlojamiento() == "Casa de playa") {
+        total = 50.0;
+    }
+    else if (cliente.getTipoAlojamiento() == "Cabaña") {
+        total = 75.0;
+    }
+    else {
+        // Handle undefined type (optional)
+        cout << "Tipo de alojamiento no reconocido.\n";
     }
 
     if (cliente.getPromocion() == "Descuento del 10%") {
@@ -46,27 +56,26 @@ void generarFactura(const Cliente& cliente, const Inventario& inventario) {
         total += 15; // Agregar $15 adicionales por los extras
     }
 
+    cout << "Precio Alojamiento: $" << total << endl;
     cout << "Total: $" << total << endl;
 }
 
 
+
 int main() {
+
     Lista<Usuario*> listaUsuarios;
     int opcion = 0;
     int id = 1; // ID automático para simplificar la creación de usuarios
 
     do {
-        cout << "\n** Menú Principal **\n";
-        cout << "1. Registrar Cliente\n";
-        cout << "2. Mostrar Usuarios\n";
-        cout << "3. Salir\n";
-        cout << "Ingrese una opción: ";
+        mostrarMenu();
         cin >> opcion;
 
         switch (opcion) {
         case 1: {  // Registrar Cliente
             system("cls");
-            cout << "\n**Registro de Cliente**\n";
+            cout << "\n*Registro de Cliente*\n";
             cout << "Ingrese nombre completo: ";
             cin.ignore(); // Clear the input buffer
             string nombreCompleto;
@@ -83,7 +92,7 @@ int main() {
 
             // Mostrar lista de lugares disponibles
             Inventario inventario; // Assuming you have an Inventario object
-   
+
 
             cout << "Ingrese el número de habitación: ";
             string habitacion;
@@ -114,11 +123,11 @@ int main() {
                 tipoAlojamiento = "Indefinido";
             }
 
-            cout << "Ingrese nombre del hospedaje: "<<endl;
+            cout << "Ingrese nombre del hospedaje: " << endl;
             string lugar;
             cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
             getline(cin, lugar);
-            cout << "Seleccione la promoción: "<<endl;
+            cout << "Seleccione la promoción: " << endl;
             cout << "1. Interbank\n";
             cout << "2. BCP\n";
             cout << "3. Sin promoción\n";
@@ -147,6 +156,7 @@ int main() {
                 new Cliente(id++, nombreCompleto, edad, habitacion, tipoAlojamiento, lugar, promocion);
             listaUsuarios.insertarFinal(nuevoCliente);
             cout << "Cliente registrado con éxito.\n";
+            generarFactura(*nuevoCliente, inventario); 
             break;
         }
         case 2: {  // Mostrar Usuarios
