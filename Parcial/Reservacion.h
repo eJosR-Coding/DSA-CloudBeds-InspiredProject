@@ -3,39 +3,32 @@
 #define RESERVACION_H
 
 #include "Dependencies.h"
-#include "Lista.h"
-#include "Cliente.h"
-#include <iostream>
-#include <string>
 using namespace std;
 
 class Reservacion {
 private:
-    int id;
-    int clienteId;
-    int habitacionId;
-    string fechaInicio;
-    string fechaFin;
+    string nombreCliente;
+    string numeroHabitacion;
 
 public:
-    Reservacion(int id, int clienteId, int habitacionId, string fechaInicio, string fechaFin)
-        : id(id), clienteId(clienteId), habitacionId(habitacionId), fechaInicio(fechaInicio), fechaFin(fechaFin) {}
-
-    static void mostrarReservaciones(const Lista<Reservacion*>& listaReservaciones) {
-        Nodo<Reservacion*>* actual = listaReservaciones.getInicio();
-        while (actual != nullptr) {
-            actual->valor->mostrarDetalles();
-            actual = actual->siguiente;
-        }
-    }
+    Reservacion(string nombreCliente, string numeroHabitacion)
+        : nombreCliente(nombreCliente), numeroHabitacion(numeroHabitacion) {}
 
     void mostrarDetalles() const {
-        cout << "ID: " << id << endl;
-        cout << "Cliente ID: " << clienteId << endl;
-        cout << "Habitación ID: " << habitacionId << endl;
-        cout << "Fecha de inicio: " << fechaInicio << endl;
-        cout << "Fecha de fin: " << fechaFin << endl;
+        cout << "Cliente: " << nombreCliente << ", Habitación: " << numeroHabitacion << endl;
+    }
+
+    static void mostrarReservaciones(const Lista<Reservacion*>& listaReservaciones) {
+        if (listaReservaciones.getTamano() == 0) {
+            cout << "No hay reservaciones registradas." << endl;
+        }
+        else {
+            Nodo<Reservacion*>* actual = listaReservaciones.getInicio();
+            while (actual != nullptr) {
+                actual->valor->mostrarDetalles();
+                actual = actual->siguiente;
+            }
+        }
     }
 };
-
 #endif

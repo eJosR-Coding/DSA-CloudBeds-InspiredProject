@@ -1,17 +1,5 @@
 ﻿  Parcial.cpp
 C:\Users\josep\OneDrive\Documentos\Estructura de datos\Listas enlazadas\W3resourceProblems\Excercises\Parcial\Parcial\Promocion.h(14,22): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
 C:\Users\josep\OneDrive\Documentos\Estructura de datos\Listas enlazadas\W3resourceProblems\Excercises\Parcial\Parcial\Promocion.h(18,22): warning C4244: 'return': conversión de 'double' a 'float'; posible pérdida de datos
-C:\Users\josep\OneDrive\Documentos\Estructura de datos\Listas enlazadas\W3resourceProblems\Excercises\Parcial\Parcial\Parcial.cpp(13,19): error C2511: 'void Reservacion::mostrarDetalles(void) const': la función miembro sobrecargada no se ha encontrado en 'Reservacion'
-C:\Users\josep\OneDrive\Documentos\Estructura de datos\Listas enlazadas\W3resourceProblems\Excercises\Parcial\Parcial\Reservacion.h(9,7): message : vea la declaración de 'Reservacion'
-C:\Users\josep\OneDrive\Documentos\Estructura de datos\Listas enlazadas\W3resourceProblems\Excercises\Parcial\Parcial\Parcial.cpp(14,23): error C2065: 'id': identificador no declarado
-C:\Users\josep\OneDrive\Documentos\Estructura de datos\Listas enlazadas\W3resourceProblems\Excercises\Parcial\Parcial\Parcial.cpp(15,31): error C2597: referencia no válida a miembro no static 'Reservacion::clienteId'
-C:\Users\josep\OneDrive\Documentos\Estructura de datos\Listas enlazadas\W3resourceProblems\Excercises\Parcial\Parcial\Reservacion.h(11,9): message : vea la declaración de 'Reservacion::clienteId'
-C:\Users\josep\OneDrive\Documentos\Estructura de datos\Listas enlazadas\W3resourceProblems\Excercises\Parcial\Parcial\Parcial.cpp(16,35): error C2597: referencia no válida a miembro no static 'Reservacion::habitacionId'
-C:\Users\josep\OneDrive\Documentos\Estructura de datos\Listas enlazadas\W3resourceProblems\Excercises\Parcial\Parcial\Reservacion.h(12,9): message : vea la declaración de 'Reservacion::habitacionId'
-C:\Users\josep\OneDrive\Documentos\Estructura de datos\Listas enlazadas\W3resourceProblems\Excercises\Parcial\Parcial\Parcial.cpp(17,36): error C2065: 'fechaInicio': identificador no declarado
-C:\Users\josep\OneDrive\Documentos\Estructura de datos\Listas enlazadas\W3resourceProblems\Excercises\Parcial\Parcial\Parcial.cpp(18,33): error C2065: 'fechaFin': identificador no declarado
-C:\Users\josep\OneDrive\Documentos\Estructura de datos\Listas enlazadas\W3resourceProblems\Excercises\Parcial\Parcial\Parcial.cpp(302,26): error C2664: 'void Reservacion::mostrarReservaciones(const Lista<Reservacion *> &,const Lista<Cliente *> &)': el argumento 2 no puede convertirse de 'Lista<Usuario *>' a 'const Lista<Cliente *> &'
-C:\Users\josep\OneDrive\Documentos\Estructura de datos\Listas enlazadas\W3resourceProblems\Excercises\Parcial\Parcial\Parcial.cpp(302,67): message : Razón: no se puede realizar la conversión de 'Lista<Usuario *>' a 'const Lista<Cliente *>'
-C:\Users\josep\OneDrive\Documentos\Estructura de datos\Listas enlazadas\W3resourceProblems\Excercises\Parcial\Parcial\Parcial.cpp(302,67): message : No hay disponible ningún operador de conversión definido por el usuario que pueda realizar esta conversión, o bien no se puede llamar al operador
-C:\Users\josep\OneDrive\Documentos\Estructura de datos\Listas enlazadas\W3resourceProblems\Excercises\Parcial\Parcial\Reservacion.h(21,17): message : vea la declaración de 'Reservacion::mostrarReservaciones'
-C:\Users\josep\OneDrive\Documentos\Estructura de datos\Listas enlazadas\W3resourceProblems\Excercises\Parcial\Parcial\Parcial.cpp(302,26): message : al hacer coincidir la lista de argumentos '(Lista<Reservacion *>, Lista<Usuario *>)'
+  AssemblyInfo.obj : se encontró un módulo MSIL; vinculación incremental deshabilitada para MSIL; ejecutando vínculo completo
+  Parcial.vcxproj -> C:\Users\josep\OneDrive\Documentos\Estructura de datos\Listas enlazadas\W3resourceProblems\Excercises\Parcial\x64\Debug\Parcial.exe

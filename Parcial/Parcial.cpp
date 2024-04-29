@@ -7,16 +7,12 @@
 #include "ServerStatus.h"
 #include "Reservacion.h"
 #include "Administrador.h"
+#include "Pago.h"
+#include "Resena.h"
+
 using namespace System;
 using namespace std;
 
-void Reservacion::mostrarDetalles() const {
-    cout << "ID: " << id << endl;
-    cout << "Cliente ID: " << clienteId << endl;
-    cout << "Habitación ID: " << habitacionId << endl;
-    cout << "Fecha de inicio: " << fechaInicio << endl;
-    cout << "Fecha de fin: " << fechaFin << endl;
-}
 
 void mostrarMenu() {
     cout << "\n========================================\n";
@@ -25,11 +21,33 @@ void mostrarMenu() {
     cout << "1. Registrar Cliente\n";
     cout << "2. Registrar Empleado\n";
     cout << "3. Mostrar Usuarios\n";
+    cout << "4. Mostrar Reservas hasta la fecha" << endl;
+    cout << "5. Resenas" << endl;
+    cout << "6. Mostrar ultimo cliente registrado" << endl;
     cout << "7. Salir\n";
     cout << "========================================\n";
     cout << "Seleccione una opcion: ";
 }
-void generarFactura(const Cliente& cliente, const Inventario& inventario) {
+void addReviewsRecursively(Nodo<Usuario*>* nodoCliente, Lista<Resena*>& listaReviews) {
+    if (nodoCliente == nullptr) {
+        return; 
+    }
+
+    Usuario* usuario = nodoCliente->valor;
+    Cliente* cliente = dynamic_cast<Cliente*>(usuario);
+    if (cliente != nullptr) {
+        string nombre = cliente->getNombreCompleto();
+        string habitacion = cliente->getHabitacion();
+        int rating = rand() % 10 + 1;
+
+        Resena* nuevaReview = new Resena(listaReviews.getTamano() + 1, nombre, "Reseña sobre la habitación: " + habitacion, rating);
+        listaReviews.insertarFinal(nuevaReview);
+    }
+
+    addReviewsRecursively(nodoCliente->siguiente, listaReviews);
+}
+
+void generarFactura(const Cliente& cliente, const Inventario& inventario, int facturaId) {
     cout << "\n*Factura*\n";
     cout << "Cliente: " << cliente.getNombreCompleto() << endl;
     cout << "Habitación: " << cliente.getHabitacion() << endl;
@@ -39,7 +57,7 @@ void generarFactura(const Cliente& cliente, const Inventario& inventario) {
 
     double total = 0;
 
-    // Calculate accommodation cost based on type
+    // Calcular costo del alojamiento basado en el tipo
     if (cliente.getTipoAlojamiento() == "Departamento") {
         total = 25.0;
     }
@@ -50,46 +68,68 @@ void generarFactura(const Cliente& cliente, const Inventario& inventario) {
         total = 75.0;
     }
     else {
-        // Handle undefined type (optional)
         cout << "Tipo de alojamiento no reconocido.\n";
-        return; // Exit function if type is invalid
+        return; // Salir de la función
     }
 
-    // Apply discount based on promotion
-    double descuentoTotal = 0; // Accumulator for total discount applied
+    // Aplicar descuentos basados en la promoción
+    double descuentoTotal = 0;
     string promocion = cliente.getPromocion();
     if (promocion == "Interbank") {
-        descuentoTotal += total * 0.1; // Apply 10% discount
+        descuentoTotal += total * 0.1; // 10% de descuento
     }
     else if (promocion == "BCP") {
-        descuentoTotal += total * 0.15; // Apply 15% discount
+        descuentoTotal += total * 0.15; // 15% de descuento
     }
 
-    // Apply type-based discount (if applicable)
+    // Descuentos adicionales basados en el tipo de alojamiento
     if (cliente.getTipoAlojamiento() == "Departamento") {
-        descuentoTotal += 2.5; // Apply $2.5 discount for Departamento
+        descuentoTotal += 2.5;
     }
     else if (cliente.getTipoAlojamiento() == "Casa de playa") {
-        descuentoTotal += 5.0; // Apply $5.0 discount for Casa de playa
+        descuentoTotal += 5.0;
     }
     else if (cliente.getTipoAlojamiento() == "Cabaña") {
-        descuentoTotal += 7.5; // Apply $7.5 discount for Cabaña
+        descuentoTotal += 7.5;
     }
 
-    // Apply accumulated discounts
     total -= descuentoTotal;
 
-    // Verify if the customer wants to add soap, shampoo, and towel
+    // Consulta por extras
     char deseaExtras;
     cout << "¿Desea añadir jabón, champú y toalla? (s/n): ";
     cin >> deseaExtras;
     if (deseaExtras == 's' || deseaExtras == 'S') {
-        total += 15; // Add $15 for extras
+        total += 15; 
     }
 
     cout << "Precio Alojamiento: $" << total << endl;
     cout << "Total: $" << total << endl;
+
+    // Preguntar si se desea pagar ahora
+    cout << "¿Desea realizar el pago ahora? (s/n): ";
+    char deseaPagar;
+    cin >> deseaPagar;
+
+    if (deseaPagar == 's' || deseaPagar == 'S') {
+        cout << "Seleccione método de pago: \n1. Efectivo\n2. Tarjeta\n3. Transferencia\n";
+        int opcionMetodoPago;
+        cin >> opcionMetodoPago;
+
+        string metodoPago;
+        switch (opcionMetodoPago) {
+        case 1: metodoPago = "Efectivo"; break;
+        case 2: metodoPago = "Tarjeta"; break;
+        case 3: metodoPago = "Transferencia"; break;
+        default: metodoPago = "Desconocido";
+        }
+
+        // Crear y confirmar el pago
+        Pago nuevoPago(facturaId, facturaId, total, metodoPago);
+        nuevoPago.confirmarPago();
+    }
 }
+
 
 
 int main() {
@@ -97,7 +137,7 @@ int main() {
     servidor.encender();
 
     Lista<Reservacion*> listaReservaciones; 
-
+    Lista<Resena*> listaReviews;
     Lista<Usuario*> listaUsuarios;
 
     int opcion = 0;
@@ -120,7 +160,7 @@ int main() {
             system("cls");
             cout << "\n*Registro de Cliente*\n";
             cout << "Ingrese nombre completo: ";
-            cin.ignore(); // Clear the input buffer
+            cin.ignore(); 
             string nombreCompleto;
             getline(cin, nombreCompleto);
 
@@ -134,7 +174,7 @@ int main() {
             int edad = edadTemporal;
 
             // Mostrar lista de lugares disponibles
-            Inventario inventario; // Assuming you have an Inventario object
+            Inventario inventario;
 
             cout << "Ingrese el número de habitación: ";
             string habitacion;
@@ -167,7 +207,7 @@ int main() {
 
             cout << "Ingrese nombre del hospedaje: " << endl;
             string lugar;
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
             getline(cin, lugar);
             cout << "Seleccione la promoción: " << endl;
             cout << "1. Interbank\n";
@@ -199,14 +239,21 @@ int main() {
             listaUsuarios.insertarFinal(nuevoCliente);
 
             cout << "Cliente registrado con éxito.\n";
-            generarFactura(*nuevoCliente, inventario);
+            generarFactura(*nuevoCliente, inventario, id);
+            // Crear y registrar una reservación
+            Reservacion* nuevaReservacion = new Reservacion(nombreCompleto, habitacion);
+            listaReservaciones.insertarFinal(nuevaReservacion);
+
+            addReviewsRecursively(listaUsuarios.getInicio(), listaReviews);
+
+            cout << "Reservación creada con éxito para " << nuevoCliente->getNombreCompleto() << ".\n";
             break;
         }
         case 2: {  // Registrar Empleado
             system("cls");
             cout << "\n*Registro de Empleado*\n";
             cout << "Ingrese nombre completo: ";
-            cin.ignore(); // Clear the input buffer
+            cin.ignore();
             string nombreCompleto;
             getline(cin, nombreCompleto);
 
@@ -220,7 +267,7 @@ int main() {
             int edad = edadTemporal;
 
             // Mostrar lista de lugares disponibles
-            Inventario inventario; // Assuming you have an Inventario object
+            Inventario inventario;
 
             cout << "Seleccione el tipo de alojamiento: " << endl;
             cout << "1. Departamento\n";
@@ -273,7 +320,7 @@ int main() {
 
             cout << "Ingrese nombre del lugar de trabajo: " << endl;
             string lugartrabajo;
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // Clear the input buffer
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); 
             getline(cin, lugartrabajo);
 
             cout << "Ingrese la contrasena: ";
@@ -284,11 +331,13 @@ int main() {
                 new Empleado(id++, nombreCompleto, edad, tipoAlojamiento, lugartrabajo, departamentotrabajo, contrasena);
             listaUsuarios.insertarFinal(nuevoEmpleado);
             cout << "Empleado registrado con éxito.\n";
-            break;
+            
+            system("cls");
             listaUsuarios.mostrar();
             break;
         }
         case 3: {  // Mostrar Usuarios
+            system("cls");
             cout << "Usuarios registrados:\n";
             listaUsuarios.mostrar();
             cout << "\nOrdenado por intercambio:\n";
@@ -297,11 +346,43 @@ int main() {
             break;
         }
         case 4: { // Mostrar Reservaciones
-            cout << "Reservaciones hasta la fecha: " << endl;
-            // Llama a la función mostrarReservaciones() pasando la lista de reservaciones y la lista de clientes
-            Reservacion::mostrarReservaciones(listaReservaciones, listaUsuarios);
+            system("cls");
+            cout << "Reservaciones hasta la fecha: \n";
+            Reservacion::mostrarReservaciones(listaReservaciones);
             break;
         }
+        case 5: {
+            system("cls");
+            cout << "Resenas hasta la fecha: " << endl;
+         
+            if (listaReviews.getTamano() > 0) {
+                Nodo<Resena*>* nodoActual = listaReviews.getInicio();
+
+                while (nodoActual != nullptr) {
+                    nodoActual->valor->show(); // Mostrar detalles de la reseña
+                    nodoActual = nodoActual->siguiente;
+                }
+            }
+            else {
+                cout << "No hay reseñas disponibles.\n";
+            }
+            break;
+
+        }
+        case 6: { 
+            system("cls");
+            try {
+                
+                Usuario* ultimoCliente = listaUsuarios.obtenerUltimoSinEliminar();
+                cout << "Último cliente registrado: " << ultimoCliente->toString() << endl;
+            }
+            catch (const std::runtime_error& e) {
+                cout << e.what() << endl;
+            }
+            break;
+        }
+
+
         case 7: {  // Salir
             cout << "Saliendo del sistema.\n";
             servidor.apagar();

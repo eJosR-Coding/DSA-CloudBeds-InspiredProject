@@ -36,6 +36,7 @@ public:
         return ss.str();
     }
 
+   
     string getNombreCompleto() const { return nombreCompleto; }
     void setNombreCompleto(const string& nombreCompleto) { this->nombreCompleto = nombreCompleto; }
 
