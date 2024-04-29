@@ -8,15 +8,15 @@ class Promocion {
 private:
     int id;
     string descripcion;
-    double descuento;  // Porcentaje de descuento
-
+    string promocion;
 public:
-    Promocion(int id, string descripcion, double descuento)
-        : id(id), descripcion(descripcion), descuento(descuento) {}
-    static float aplicarDescuento(float total) {
+    static float promociónINTERBANK(float total) {
+        return total * 0.6;
+    }
+
+    static float promociónBCP(float total) {
         return total * 0.8; // Se aplica un descuento del 20%
     }
-    void mostrarInformacion() const;
 };
 
 #endif

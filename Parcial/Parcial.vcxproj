@@ -127,6 +127,7 @@
     <ResourceCompile Include="app.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Administrador.h" />
     <ClInclude Include="Cliente.h" />
     <ClInclude Include="CloudServer.h" />
     <ClInclude Include="Dependencies.h" />

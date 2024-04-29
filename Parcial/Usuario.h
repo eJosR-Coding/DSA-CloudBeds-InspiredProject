@@ -21,7 +21,10 @@ public:
         return ss.str();
     }
 
+    virtual string getNombre() const { return nombreUsuario; } // Método para obtener el nombre del usuario
+
     virtual ~Usuario() {}
 };
+
 
 #endif
