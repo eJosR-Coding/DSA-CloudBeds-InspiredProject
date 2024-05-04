@@ -28,7 +28,7 @@ void mostrarMenu() {
     cout << "========================================\n";
     cout << "Seleccione una opcion: ";
 }
-void addReviewsRecursively(Nodo<Usuario*>* nodoCliente, Lista<Resena*>& listaReviews) {
+void AnadirReviews(Nodo<Usuario*>* nodoCliente, Lista<Resena*>& listaReviews) {
     if (nodoCliente == nullptr) {
         return; 
     }
@@ -44,7 +44,7 @@ void addReviewsRecursively(Nodo<Usuario*>* nodoCliente, Lista<Resena*>& listaRev
         listaReviews.insertarFinal(nuevaReview);
     }
 
-    addReviewsRecursively(nodoCliente->siguiente, listaReviews);
+    AnadirReviews(nodoCliente->siguiente, listaReviews);
 }
 
 void generarFactura(const Cliente& cliente, const Inventario& inventario, int facturaId) {
@@ -244,7 +244,7 @@ int main() {
             Reservacion* nuevaReservacion = new Reservacion(nombreCompleto, habitacion);
             listaReservaciones.insertarFinal(nuevaReservacion);
 
-            addReviewsRecursively(listaUsuarios.getInicio(), listaReviews);
+            AnadirReviews(listaUsuarios.getInicio(), listaReviews);
 
             cout << "Reservación creada con éxito para " << nuevoCliente->getNombreCompleto() << ".\n";
             break;

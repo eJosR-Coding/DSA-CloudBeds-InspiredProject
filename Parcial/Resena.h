@@ -15,16 +15,16 @@ private:
    vector<Resena*> responses;
 
 public:
-    // Constructor
+
     Resena(int id, const string& author, const string& text, int rating)
         : id(id), author(author), text(text), rating(rating) {}
 
-    // Add a response
+
     void addResponse(Resena* response) {
         responses.push_back(response);
     }
 
-    // Display the review and its responses
+
     void show() const {
         cout << "ID: " << id << std::endl;
         cout << "Author: " << author << std::endl;
